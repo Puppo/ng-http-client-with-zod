@@ -1,1 +1,27 @@
-<ng-http-with-zod-nx-welcome></ng-http-with-zod-nx-welcome>
+<h1>Ng Http with Zod</h1>
+
+<div>
+  <label for="search">Search for a user:</label>
+  <input
+    #search
+    type="text"
+    placeholder="Search for a user"
+    (input)="searchUsers(search.value)"
+  />
+</div>
+
+<ng-container *ngIf="users$ | async as users; else loadingOrError">
+  <ul>
+    <li *ngFor="let user of users">
+      <img [src]="user.avatar_url" alt="user avatar" width="40" height="40" />
+      <h2>{{ user.login }}</h2>
+      <p>{{ user.id }}, {{ user.type }}</p>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-template #loadingOrError>
+  <span [style.color]="'red'">
+    Something went wrong. Please try again later.
+  </span>
+</ng-template>
